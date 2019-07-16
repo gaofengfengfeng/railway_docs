@@ -390,13 +390,52 @@ request
 
 请求json示例：
 
+```
+{
+	"user_profile": {
+		"user_id": 1562861299770577,
+		"username": "gaofeng",
+		"phone": "17801020789"
+	},
+	"data": {
+		"standard_rank": 3,
+		"headline": "安全通用要求",
+		"headline_rank": 1,
+		"secondary_headline": "安全物理环境",
+		"secondary_headline_rank": 1,
+		"name": "物理访问控制",
+		"name_rank": "1",
+		"rank": "S1",
+		"content": "机房出入口应安排专人值守或配置电子门禁系统，控制、鉴别和记录进入的人员。"
+	},
+	"request_time": 1563004345000,
+	"token": "fAttNJoPOV4ogNV6zTdwIpwN94GFvjBqdHBHDj29LJuqfevWwWs1BYWG52ExGTHW1MA6WqOAScKKkgNu8wxFHA%3D%3D"
+}
+```
+
 response
 
 null
 
 响应json示例：
 
+```
+{
+    "err_no": 0,
+    "err_msg": "success",
+    "response_time": 1563273060256,
+    "data": null
+}
+```
+
 错误号定义:
+
+| 错误号 | 错误信息 |
+|-------|---------|
+| 101121021 | 参数校验错误 |
+| 101121022 | 服务器未捕获异常 |
+| 101161801| 数据库指定位置已经存在一条记录 |
+| 101161814 | 数据库插入错误 |
 
 ### 5.按要求获取标准库记录
 
