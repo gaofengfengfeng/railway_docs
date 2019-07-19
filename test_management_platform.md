@@ -589,13 +589,46 @@ request
 
 请求json示例：
 
+```
+{
+	"user_profile": {
+		"user_id": 1562861299770577,
+		"username": "gaofeng",
+		"phone": "17801020789"
+	},
+	"data": {
+		"project_id": 1563520153538800,
+		"status": 2
+	},
+	"request_time": 1563004345000,
+	"token": "fAttNJoPOV4ogNV6zTdwIpwN94GFvjBqdHBHDj29LJuqfevWwWs1BYWG52ExGTHW1MA6WqOAScKKkgNu8wxFHA%3D%3D"
+}
+```
+
 response
 
 null
 
-响应json示例：
+响应json示例:
+
+```
+{
+    "err_no": 0,
+    "err_msg": "success",
+    "response_time": 1563527347993,
+    "data": null
+}
+```
 
 错误号定义:
+
+| 错误号 | 错误信息 |
+|-------|---------|
+| 101121021 | 参数校验错误 |
+| 101121022 | 服务器未捕获异常 |
+| 101191548 | 未知状态 |
+| 101191552 | 不存在该项目 |
+| 101191637 | 状态不可达或者数据库错误 |
 
 ### 8.分配项目的测试人员
 
