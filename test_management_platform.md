@@ -26,6 +26,7 @@ CREATE TABLE `user`(
 CREATE TABLE `test_project`(
   `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增id',
   `project_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '项目id',
+  `name` varchar(16) NOT NULL DEFAULT '' COMMENT '项目名称',
   `test_leader_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '测试单位负责人id',
   `under_test_leader_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '被测单位负责人id',
   `status` smallint(4) NOT NULL DEFAULT '0' COMMENT '项目进展状态 0:未使用 1:定级材料审核中 2:定级材料审核完成 3:定级材料审核失败 4:备案中 5:备案成功 6:备案失败 7:测试待确认 8:测试中 9:驳回整改 10:测试通过 11:项目取消',
@@ -522,11 +523,30 @@ request
 
 | 字段名称 | 字段类型 | 是否必传 | 取值示例 | 备注 |
 | -- | -- | -- | -- | -- |
+| name | String | Y |  | 项目名称 |
 | project_location | String | Y || 项目所在位置信息|
 | rank | String | Y || 项目定级 如 S1,A2,G1|
 | type | int | Y || 项目测试类型 1:等保测试 2:风险评估测试 待补充...|
 
 请求json示例：
+
+```
+{
+	"user_profile": {
+		"user_id": 1562861299770577,
+		"username": "gaofeng",
+		"phone": "17801020789"
+	},
+	"data": {
+		"name": "测试项目1",
+		"project_location": "北京交通大学",
+		"rank": "S1,A2,G1",
+		"type": 1
+	},
+	"request_time": 1563004345000,
+	"token": "fAttNJoPOV4ogNV6zTdwIpwN94GFvjBqdHBHDj29LJuqfevWwWs1BYWG52ExGTHW1MA6WqOAScKKkgNu8wxFHA%3D%3D"
+}
+```
 
 response
 
@@ -536,7 +556,25 @@ response
 
 响应json示例：
 
+```
+{
+    "err_no": 0,
+    "err_msg": "success",
+    "response_time": 1563520153540,
+    "data": {
+        "project_id": 1563520153538800
+    }
+}
+```
+
 错误号定义:
+
+| 错误号 | 错误信息 |
+|-------|---------|
+| 101121021 | 参数校验错误 |
+| 101121022 | 服务器未捕获异常 |
+| 101182058 | 项目名称已存在 |
+| 101190152 | 暂无可调度的测试单位负责人 |
 
 ### 7.修改项目状态
 
