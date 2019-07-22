@@ -695,6 +695,20 @@ null
 
 请求json示例：
 
+```
+{
+	"user_profile": {
+		"user_id": 1563471692050997,
+		"username": "王五",
+		"phone": "17801020444"
+	},
+	"data": {
+	},
+	"request_time": 1563004345000,
+	"token": "fAttNJoPOV4ogNV6zTdwIpwN94GFvjBqdHBHDj29LJuqfevWwWs1BYWG52ExGTHW1MA6WqOAScKKkgNu8wxFHA%3D%3D"
+}
+```
+
 response
 
 | 字段名称 | 字段类型 | 是否必传 | 取值示例 | 备注 |
@@ -705,13 +719,36 @@ response
 | -- | -- | -- | -- | -- |
 | project_id | int | Y || 项目id |
 | test_leader_name| String | Y || 测试单位负责人姓名 |
+| test_leader_id | int | Y || 测试单位负责人id |
 | under_test_leader_name| String | Y || 被测单位负责人姓名 |
+| under_test_leader_id | int | Y || 被测单位负责人id |
 | status | int | Y || 项目进展状态 |
 | project_location | String | Y || 项目所在位置信息 |
 | rank | String | Y || 项目定级 如 S1,A2,G1 |
 | type | int | Y || 项目测试类型 1:等保测试 2:风险评估测试 待补充... |
 
 响应json示例：
+
+```
+{
+    "err_no": 0,
+    "err_msg": "success",
+    "response_time": 1563814749027,
+    "data": [
+        {
+            "project_id": 1563520153538800,
+            "test_leader_name": "王五",
+            "test_leader_id": 1563471692050997,
+            "under_test_leader_name": "高峰",
+            "under_test_leader_id": 1562861299770577,
+            "status": 7,
+            "project_location": "北京交通大学",
+            "rank": "S1,A2,G1",
+            "type": 1
+        }
+    ]
+}
+```
 
 错误号定义:
 
