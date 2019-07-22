@@ -63,8 +63,10 @@ CREATE TABLE `project_material`(
   `committer_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '提交者id',
   `type` smallint(4) NOT NULL DEFAULT '0' COMMENT '子任务类型 0:未使用 1:备案资料 2:公安部整改意见 3:定级审核材料 4:测评报告 5:整改方案',
   `status` smallint(4) NOT NULL DEFAULT '0' COMMENT '参照test_project表中的status字段，表示在哪个阶段提交的材料',
+  `audit_status` smallint(4) DEFAULT '' COMMENT '材料审核状态 0:不通过 1:通过',
   `version` smallint(4) NOT NULL DEFAULT '0' COMMENT '某类材料的提交版本号',
   `remark` varchar(256) NOT NULL DEFAULT '' COMMENT '提交材料时的一些备注文字信息',
+  `discussion` varchar(256) NOT NULL DEFAULT '' COMMENT '审核提交时的一些备注文字信息',
   `file_url` varchar(512) NOT NULL DEFAULT '' COMMENT '附件url地址',
   `content` mediumtext NOT NULL COMMENT '存储可能的json字符串(含有整改意见)',
   `create_time` bigint(20) NOT NULL DEFAULT '0' COMMENT '创建时间',
@@ -752,37 +754,13 @@ response
 
 错误号定义:
 
-### 10.拉取某个项目的详情
+| 错误号 | 错误信息 |
+|-------|---------|
+| 101121021 | 参数校验错误 |
+| 101121022 | 服务器未捕获异常 |
+| 101200042 | 不支持的用户角色(目前只支持测试单位负责人、被测单位项目负责人、实际测试人员)|
 
-url: v1/project/list
-
-request
-
-null
-
-请求json示例：
-
-response
-
-| 字段名称 | 字段类型 | 是否必传 | 取值示例 | 备注 |
-| -- | -- | -- | -- | -- |
-| projects| list<Project> | Y || 所负责项目列表 |
-
-| Project字段名称 | 字段类型 | 是否必传 | 取值示例 | 备注 |
-| -- | -- | -- | -- | -- |
-| project_id | int | Y || 项目id |
-| test_leader_name| String | Y || 测试单位负责人姓名 |
-| under_test_leader_name| String | Y || 被测单位负责人姓名 |
-| status | int | Y || 项目进展状态 |
-| project_location | String | Y || 项目所在位置信息 |
-| rank | String | Y || 项目定级 如 S1,A2,G1 |
-| type | int | Y || 项目测试类型 1:等保测试 2:风险评估测试 待补充... |
-
-响应json示例：
-
-错误号定义:
-
-### 11.获取某个项目对应的模板信息
+### 10.获取某个项目对应的模板信息
 
 url: v1/project/template
 
@@ -806,7 +784,7 @@ response
 
 错误号定义:
 
-### 12.上传项目子任务材料
+### 11.上传项目子任务材料
 
 url: v1/material/upload
 
@@ -832,7 +810,7 @@ null
 
 错误号定义:
 
-### 13.拉取审核材料列表
+### 12.拉取审核材料列表
 
 url: v1/material/list
 
@@ -863,7 +841,7 @@ response
 
 错误号定义:
 
-### 14.创建提测项目子任务材料
+### 13.创建提测项目子任务材料
 
 url: v1/material/update
 
@@ -887,6 +865,30 @@ null
 响应json示例：
 
 错误号定义:
+
+
+### 14.材料审核
+
+url: v1/material/audit
+
+request
+
+| 字段名称 | 字段类型 | 是否必传 | 取值示例 | 备注 |
+| -- | -- | -- | -- | -- |
+| material_id | int| Y || 材料id |
+| result | int | Y || 0:不通过 1:通过 |
+| discussion | String | N || 通过或不通过原因 |
+
+请求json示例：
+
+response
+
+null
+
+响应json示例：
+
+错误号定义:
+
 
 ### 15.文件上传
 
