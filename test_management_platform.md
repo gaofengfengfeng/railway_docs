@@ -5,7 +5,7 @@
 CREATE DATABASE `test_management`;
 
 CREATE TABLE `user`(
-  `id` bigint(11) unsigned p NULL AUTO_INCREMENT COMMENT '自增id',
+  `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增id',
   `user_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
   `username` varchar(16) NOT NULL DEFAULT '' COMMENT '用户名',
   `password` varchar(256) NOT NULL DEFAULT '' COMMENT '密码: md5(password+salt)',
@@ -63,7 +63,7 @@ CREATE TABLE `project_material`(
   `committer_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '提交者id',
   `type` smallint(4) NOT NULL DEFAULT '0' COMMENT '子任务类型 0:未使用 1:备案资料 2:公安部整改意见 3:定级审核材料 4:测评报告 5:整改方案',
   `status` smallint(4) NOT NULL DEFAULT '0' COMMENT '参照test_project表中的status字段，表示在哪个阶段提交的材料',
-  `audit_status` smallint(4) DEFAULT '' COMMENT '材料审核状态 0:不通过 1:通过',
+  `audit_status` smallint(4) DEFAULT '0' COMMENT '材料审核状态 0:未审核 1:不通过 2:不通过',
   `version` smallint(4) NOT NULL DEFAULT '0' COMMENT '某类材料的提交版本号',
   `remark` varchar(256) NOT NULL DEFAULT '' COMMENT '提交材料时的一些备注文字信息',
   `discussion` varchar(256) NOT NULL DEFAULT '' COMMENT '审核提交时的一些备注文字信息',
@@ -224,6 +224,7 @@ response
 | 101121022 | 服务器未捕获异常 |
 | 101131841 | 用户名不存在 |
 | 101131849 | 密码错误 |
+| 101241317 | redis错误 |
 
 ### 2.分配用户账号角色
 url: v1/user/assignUser
@@ -964,9 +965,108 @@ response
 1. 各个状态间都是串行的吗？是否有并行关系？
 2. 一次操作可以上传多个附件吗？以防万一把project_material中的file_url字段设置的长一些
 3. 需要对接发送短信api，计划使用腾讯云，因为不需要公司资质，只需要注册一个公众号，短信签名通常与公众号名称相同最容易过审。所以有如下任务：1.申请公众号 2.申请短信签名 3.申请短信模板
-4. 加密部署问题更换jre lib文件 https://www.hellojava.com/a/44108.html
-5. 不要使用 java.util.base64 使用org.apache.commons.codec.binary.Base64
+4. 默认分派账号的系统管理员 用户名:administrator 密码：123456
 
 ## 项目依赖工具
 1. mysql 8.0.11
 2. redis 4.0.10
+
+## 服务器
+1. yum install java-devel 配置jdk环境  版本1.8.0_212
+
+which java
+
+ls -lrt /usr/bin/
+
+ls -lrt /etc/alternatives/java
+
+```
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.212.b04-0.el7_6.x86_64
+export JRE_HOME=$JAVA_HOME/jre
+export CLASS_PATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib
+export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
+```
+
+2. 安装maven  
+
+wget http://mirrors.hust.edu.cn/apache/maven/maven-3/3.1.1/binaries/apache-maven-3.1.1-bin.tar.gz
+
+tar -zxvf  apache-maven-3.1.1-bin.tar.gz
+
+mv apache-maven-3.1.1 maven
+
+vi /etc/profile
+
+```
+export M2_HOME=/root/maven                                  
+export PATH=$PATH:$JAVA_HOME/bin:$M2_HOME/bin
+```
+
+3. 修改maven镜像
+
+maven/conf/setting.xml
+```
+<mirror>
+  <id>alimaven</id>
+  <mirrorOf>central</mirrorOf>
+  <name>aliyun maven</name>
+  <url>http://maven.aliyun.com/nexus/content/repositories/central/</url>
+</mirror>
+```
+source /etc/profile
+
+4. yum更新为国内源
+
+```
+备份 mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
+下载 wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+生成缓存 yum makecache
+```
+
+5. 安装mysql
+
+https://blog.csdn.net/five3/article/details/87393531
+
+service mysqld start
+
+```
+alter user user() identified by "Password4Root.";
+SHOW VARIABLES LIKE 'validate_password%';
+set global validate_password.policy=LOW;
+set global validate_password.length=4;
+alter user user() identified by "123456";
+```
+
+6. 安装redis
+
+wget http://download.redis.io/releases/redis-4.0.6.tar.gz
+
+tar -zxvf redis-4.0.6.tar.gz
+
+yum install gcc
+
+cd redis-4.0.6
+
+make MALLOC=libc
+
+cd src && make install
+
+修改redis.conf中daemonize 为 yes
+
+./redis-server /root/redis-4.0.6/redis.conf
+
+7. 开放端口号
+
+https://swas.console.aliyun.com/?spm=5176.12818093.my.dswas.488716d0GAICDQ#/server/8326561783d24936ba8d0b5cfadbb543/cn-beijing/security/firewall
+
+8. 安装nginx
+
+https://www.cnblogs.com/zhoading/p/8514050.html
+
+9. 启动项目
+
+mvn clean
+
+mvn install
+
+nohup java -jar target/xxx.jar &
