@@ -149,7 +149,6 @@ CREATE TABLE `standard_library`(
 | 字段名称 | 字段类型 | 取值示例 | 备注 |
 | -- | -- | -- | -- |
 | data | object | {} | 具体返回值的json对象 |
-| user_profile| object | {} | 用户的个人信息资料 |
 | request_time| int | 1561552025099| 请求时间戳 |
 | token | String |  | 防止重复登录的token凭证 |
 
@@ -185,8 +184,6 @@ request
 
 ```
 {
-	"user_profile": {
-	},
 	"data": {
 		"username": "gaofeng",
 		"password": "HoLAT150YPtUj1UEnRofXLTpx8cmy5hMbjstt0HeMFCL011rIOP/ihcMTNVCD335VNIgpKAsMZPxhVKPsfIUOvTH9S2QdanhWZu1BAy7m2O+AFmWa6rKpCuCi7+6lNhRGsihdRFzAx024UJNBHTmc2TYN8rd43usONFmSZQQwik="
@@ -244,11 +241,6 @@ request
 
 ```
 {
-	"user_profile": {
-		"user_id": 1562861191461431,
-		"username": "administrator",
-		"phone": "17801020888"
-	},
 	"data": {
 		"username": "qijiazhen",
 		"password": "dad4h0UTOtOUKsCeLyo0vTWuWA1QBqcTX1lWGNX+mzrZJABCzZa3XZO+guQX9DgUZlTEf82zuKSewOM7KxSXUQ4hIlPnmwQsfzA+8XWPwAXv75SywSe8WXPoo+qXHfkQYTrA1PeG/Myrx5Eae8KeAu1xuGm3bupgrj8eZwFDxJQ=",
@@ -303,8 +295,6 @@ request
 
 ```
 {
-	"user_profile": {
-	},
 	"data": {
 		"role": 6
 	},
