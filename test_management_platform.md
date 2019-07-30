@@ -800,14 +800,47 @@ request
 
 
 请求json示例：
-
+```
+{
+	"user_profile": {
+		"user_id": 1562861299770577,
+		"username": "gaofeng",
+		"phone": "17801020789"
+	},
+	"data": {
+		"project_id": 1563520153538800,
+		"type": 3,
+		"remark": "ss",
+		"file_url": "v1/upload_success/acffb88f475aae5a613d761ed9c09f31.csv",
+		"content": "ss"
+	},
+	"request_time": 1563004345000,
+	"token": "fAttNJoPOV4ogNV6zTdwIpwN94GFvjBqdHBHDj29LJuqfevWwWs1BYWG52ExGTHW1MA6WqOAScKKkgNu8wxFHA%3D%3D"
+}
+```
 response
 
 null
 
 响应json示例：
+```
+{
+    "err_no": 0,
+    "err_msg": "success",
+    "response_time": 1563543180143,
+    "data": null
+}
+```
+
 
 错误号定义:
+| 错误号 | 错误信息 |
+|-------|---------|
+| 101121021 | 参数校验错误 |
+| 101121022 | 服务器未捕获异常 |
+| 101230121 | 未知项目 |
+| 101400001 | 上传失败，数据库错误 |
+
 
 ### 12.拉取审核材料列表
 
@@ -820,6 +853,20 @@ request
 | project_id | int | Y | | 项目id|
 
 请求json示例：
+```
+{
+	"user_profile": {
+		"user_id": 1562861299770577,
+		"username": "gaofeng",
+		"phone": "17801020789"
+	},
+	"data": {
+		"project_id": 1563520153538800
+	},
+	"request_time": 1563004345000,
+	"token": "fAttNJoPOV4ogNV6zTdwIpwN94GFvjBqdHBHDj29LJuqfevWwWs1BYWG52ExGTHW1MA6WqOAScKKkgNu8wxFHA%3D%3D"
+}
+```
 
 response
 
@@ -837,8 +884,57 @@ response
 | content | String | N || 存储可能的json字符串(含有整改意见) |
 
 响应json示例：
+```
+{
+    "err_no": 0,
+    "err_msg": "success",
+    "response_time": 1564120555695,
+    "data": [
+        {
+            "material_id": 1563889622023795,
+            "type": 1,
+            "status": 0,
+            "remark": "12345678",
+            "content": "sd222222ssasd"
+        },
+        {
+            "material_id": 1563889687111707,
+            "type": 1,
+            "status": 0,
+            "remark": "s",
+            "content": "content"
+        },
+        {
+            "material_id": 1563890128932400,
+            "type": 2,
+            "status": 0,
+            "remark": "s",
+            "content": "content"
+        },
+        {
+            "material_id": 1563890144135746,
+            "type": 2,
+            "status": 0,
+            "remark": "s",
+            "content": "content"
+        },
+        {
+            "material_id": 1563890187564327,
+            "type": 1,
+            "status": 0,
+            "remark": "s",
+            "content": "content"
+        }
+    ]
+}
+```
 
 错误号定义:
+| 错误号 | 错误信息 |
+|-------|---------|
+| 101121021 | 参数校验错误 |
+| 101121022 | 服务器未捕获异常 |
+| 101230121 | 未知项目 |
 
 ### 13.创建提测项目子任务材料
 
@@ -856,15 +952,49 @@ request
 | content | String | O | | 存储可能的json字符串(含有整改意见) |
 
 请求json示例：
+```
+{
+	"user_profile": {
+		"user_id": 1562861299770577,
+		"username": "gaofeng",
+		"phone": "17801020789"
+	},
+	"data": {
+		"project_id": 1563520153538800,
+		"material_id": 1563890751628584,
+		"type": 3,
+    	"remark": "ss",
+    	"file_url": "v1/upload_success/acffb88f475aae5a613d761ed9c09f31.csv",
+    	"content": "ss"
+	},
+	"request_time": 1563004345000,
+	"token": "fAttNJoPOV4ogNV6zTdwIpwN94GFvjBqdHBHDj29LJuqfevWwWs1BYWG52ExGTHW1MA6WqOAScKKkgNu8wxFHA%3D%3D"
+}
+```
 
 response
 
 null
 
 响应json示例：
+```
+{
+    "err_no": 0,
+    "err_msg": "success",
+    "response_time": 1563543180143,
+    "data": null
+}
+```
 
 错误号定义:
-
+| 错误号 | 错误信息 |
+|-------|---------|
+| 101121021 | 参数校验错误 |
+| 101121022 | 服务器未捕获异常 |
+| 101400005 | 未知材料 |
+| 101400004 | 该材料不属于该项目 |
+| 101400002 | 未做任何跟新 |
+| 101400003 | 更新失败 |
 
 ### 14.材料审核
 
@@ -875,18 +1005,51 @@ request
 | 字段名称 | 字段类型 | 是否必传 | 取值示例 | 备注 |
 | -- | -- | -- | -- | -- |
 | material_id | int| Y || 材料id |
-| result | int | Y || 0:不通过 1:通过 |
+| result | int | Y || 1:不通过 2:通过 |
 | discussion | String | N || 通过或不通过原因 |
 
 请求json示例：
+```
+{
+	"user_profile": {
+		"user_id": 1562861299770577,
+		"username": "gaofeng",
+		"phone": "17801020789"
+	},
+	"data": {
+		"material_id": 1563890751628584,
+		"result": 2,
+    	"discussion": "ss"
+	},
+	"request_time": 1563004345000,
+	"token": "fAttNJoPOV4ogNV6zTdwIpwN94GFvjBqdHBHDj29LJuqfevWwWs1BYWG52ExGTHW1MA6WqOAScKKkgNu8wxFHA%3D%3D"
+}
+```
 
 response
 
 null
 
 响应json示例：
+```
+{
+    "err_no": 0,
+    "err_msg": "success",
+    "response_time": 1563543180143,
+    "data": null
+}
+```
 
 错误号定义:
+| 错误号 | 错误信息 |
+|-------|---------|
+| 101121021 | 参数校验错误 |
+| 101121022 | 服务器未捕获异常 |
+| 101400005 | 未知材料 |
+| 101400006 | 材料已被审核 |
+| 101400007 | 该材料无法审核 |
+| 101400008 | 数据库错误，项目状态无法跟新 |
+
 
 
 ### 15.文件上传
