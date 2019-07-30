@@ -386,11 +386,6 @@ request
 
 ```
 {
-	"user_profile": {
-		"user_id": 1562861299770577,
-		"username": "gaofeng",
-		"phone": "17801020789"
-	},
 	"data": {
 		"standard_rank": 3,
 		"headline": "安全通用要求",
@@ -447,11 +442,6 @@ request
 
 ```
 {
-	"user_profile": {
-		"user_id": 1562861299770577,
-		"username": "gaofeng",
-		"phone": "17801020789"
-	},
 	"data": {
 		"standard_rank": 3,
 		"headline_rank": 1,
@@ -525,11 +515,6 @@ request
 
 ```
 {
-	"user_profile": {
-		"user_id": 1562861299770577,
-		"username": "gaofeng",
-		"phone": "17801020789"
-	},
 	"data": {
 		"name": "测试项目1",
 		"project_location": "北京交通大学",
@@ -584,11 +569,6 @@ request
 
 ```
 {
-	"user_profile": {
-		"user_id": 1562861299770577,
-		"username": "gaofeng",
-		"phone": "17801020789"
-	},
 	"data": {
 		"project_id": 1563520153538800,
 		"status": 2
@@ -638,11 +618,6 @@ request
 
 ```
 {
-	"user_profile": {
-		"user_id": 1562861299770577,
-		"username": "gaofeng",
-		"phone": "17801020789"
-	},
 	"data": {
 		"project_id": 1563520153538800,
 		"testers": [1563005296255749, 1563471692050997]
@@ -690,11 +665,6 @@ null
 
 ```
 {
-	"user_profile": {
-		"user_id": 1563471692050997,
-		"username": "王五",
-		"phone": "17801020444"
-	},
 	"data": {
 	},
 	"request_time": 1563004345000,
@@ -719,6 +689,7 @@ response
 | project_location | String | Y || 项目所在位置信息 |
 | rank | String | Y || 项目定级 如 S1,A2,G1 |
 | type | int | Y || 项目测试类型 1:等保测试 2:风险评估测试 待补充... |
+| name | String | Y || 项目名称 |
 
 响应json示例：
 
@@ -726,18 +697,19 @@ response
 {
     "err_no": 0,
     "err_msg": "success",
-    "response_time": 1563814749027,
+    "response_time": 1564485426995,
     "data": [
         {
-            "project_id": 1563520153538800,
-            "test_leader_name": "王五",
-            "test_leader_id": 1563471692050997,
-            "under_test_leader_name": "高峰",
-            "under_test_leader_id": 1562861299770577,
-            "status": 7,
+            "project_id": 1564485381602899,
+            "test_leader_name": "高峰",
+            "test_leader_id": 1564485371182439,
+            "under_test_leader_name": "冯凤娟",
+            "under_test_leader_id": 1564059171475885,
+            "status": 1,
             "project_location": "北京交通大学",
             "rank": "S1,A2,G1",
-            "type": 1
+            "type": 1,
+            "name": "测试项目2"
         }
     ]
 }
@@ -766,11 +738,6 @@ request
 
 ```
 {
-	"user_profile": {
-		"user_id": 1562861299770577,
-		"username": "gaofeng",
-		"phone": "17801020789"
-	},
 	"data": {
 		"project_id": 1563520153538800
 	},
@@ -791,9 +758,18 @@ response
 {
     "err_no": 0,
     "err_msg": "success",
-    "response_time": 1563884382408,
+    "response_time": 1564501408404,
     "data": {
-        "content": "{\"安全通用要求\":{\"安全物理环境\":{\"防盗窃和防破坏\":{\"content\":\"应将设备或主要部件进行固定，并设置明显的不易除去的标识。\"},\"物理访问控制\":{\"content\":\"机房出入口应安排专人值守或配置电子门禁系统，控制、鉴别和记录进入的人员。\"}},\"安全通信网络\":{\"通信传输\":{\"content\":\"应将设备或主要部件进行固定，并设置明显的不易除去的标识。\"}}}}"
+        "content": "{\"安全通用要求\":{\"安全物理环境\":{\"防盗窃和防破坏\":{\"content\":\"应将设备或主要部件进行固定，并设置明显的不易除去的标识。\"},\"物理访问控制\":{\"content\":\"机房出入口应安排专人值守或配置电子门禁系统，控制、鉴别和记录进入的人员。\"}},\"安全通信网络\":{\"通信传输\":{\"content\":\"应将设备或主要部件进行固定，并设置明显的不易除去的标识。\"}}}}",
+        "test_leader_name": "高峰",
+        "test_leader_id": 1564485371182439,
+        "under_test_leader_name": "冯凤娟",
+        "under_test_leader_id": 1564059171475885,
+        "status": 1,
+        "project_location": "北京交通大学",
+        "rank": "S1,A2,G1",
+        "type": 1,
+        "name": "测试项目2"
     }
 }
 ```
@@ -950,7 +926,6 @@ response
 | 101121022 | 服务器未捕获异常 |
 | 102500001 | 文件上传失败 |
 
-
 ## 五、问题
 1. 各个状态间都是串行的吗？是否有并行关系？
 2. 一次操作可以上传多个附件吗？以防万一把project_material中的file_url字段设置的长一些
@@ -1052,6 +1027,9 @@ https://swas.console.aliyun.com/?spm=5176.12818093.my.dswas.488716d0GAICDQ#/serv
 8. 安装nginx
 
 https://www.cnblogs.com/zhoading/p/8514050.html
+
+log地址 /usr/local/nginx/logs
+配置文件 sudo vim /usr/local/nginx/conf/nginx.conf
 
 9. 启动项目
 
