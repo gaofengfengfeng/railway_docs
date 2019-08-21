@@ -197,6 +197,7 @@ response
 
 | 字段名称 | 字段类型 | 是否必传 | 取值示例 | 备注 |
 | -- | -- | -- | -- | -- |
+| role | int | Y | | 用户角色 |
 | token | String | Y |  | 该用户对应的登录凭证，每次登录会改变 |
 
 响应json示例：
@@ -205,9 +206,10 @@ response
 {
     "err_no": 0,
     "err_msg": "success",
-    "response_time": 1563032428574,
+    "response_time": 1566396136447,
     "data": {
-        "token": "fAttNJoPOV4ogNV6zTdwIpwN94GFvjBqdHBHDj29LJuqfevWwWs1BYWG52ExGTHW1MA6WqOAScKKkgNu8wxFHA%3D%3D"
+        "role": 1,
+        "token": "fAttNJoPOV4ogNV6zTdwItRdRXkT5mNtcpdXP5c24ImfYzt9fP%2FF%2BvUxhzgNCrkuGoTpcAlwwuvC%2F4g9PhUCvEYn33D4WwDlwDP0rwUfxiiAEQAHg15SfWqr7lessPGw0yRmPCdsxXdld7RLmTKrkw%3D%3D"
     }
 }
 ```
